@@ -1,0 +1,4 @@
+devops/
+__pycache__/
+*.pyc
+.env
