@@ -20,8 +20,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Test application
-        run: python -c "from app import app; print('Application import successful')"
+      - name: Run tests
+        run: pytest
 
       - name: Build Docker image
         run: docker build -t complete-devops-pipeline:ci .
