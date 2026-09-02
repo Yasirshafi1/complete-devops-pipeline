@@ -30,7 +30,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t yasirshafi1/complete-devops-pipeline:ci .
+        run: docker build -t yasirshafi1/complete-devops-pipeline:${{ github.sha }} .
 
       - name: Push Docker image
-        run: docker push yasirshafi1/complete-devops-pipeline:ci
+        run: docker push yasirshafi1/complete-devops-pipeline:${{ github.sha }}
