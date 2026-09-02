@@ -34,3 +34,21 @@ jobs:
 
       - name: Push Docker image
         run: docker push yasirshafi1/complete-devops-pipeline:${{ github.sha }}
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.5
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull yasirshafi1/complete-devops-pipeline:${{ github.sha }}
+
+            docker stop devops-dashboard || true
+            docker rm devops-dashboard || true
+
+            docker run -d \
+              --name devops-dashboard \
+              --restart unless-stopped \
+              -p 5000:5000 \
+              yasirshafi1/complete-devops-pipeline:${{ github.sha }}
